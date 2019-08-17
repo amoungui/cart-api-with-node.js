@@ -6,15 +6,22 @@
 var mongoose = require('mongoose');
 
 exports.get_all_product = function(req, res, next){
-    res.status(200).json({
-        message: 'Handling GET requests to /products'
+    res.status(201).json({
+        message: 'Handling POST requests to /products'
     });
 };
 
 exports.create_product = function(req, res, next){
-    res.status(201).json({
-        message: 'Handling POST requests to /products'
-    });
+    //create the product javascript Objet 
+    var product = {
+        name: req.body.name,
+        price: req.body.price
+    };
+    res.status(200).json({
+        message: 'Product were successfully created',
+        //pass the product to the response
+        createdProduct: product
+    });    
 };
 
 exports.get_product = function(req, res, next){
