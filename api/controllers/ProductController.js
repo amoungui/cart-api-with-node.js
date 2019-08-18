@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 var mongoose = require('mongoose');
+
 //import the product model
 var Product = require('../models/product');
 
