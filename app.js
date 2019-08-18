@@ -15,6 +15,8 @@ mongoose.connect('mongodb+srv://jazzmastaz:'+process.env.MONGO_ATLAS_PW +'@marve
     //useMongoClient: true
 });
 
+mongoose.Promise = global.Promise;
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());  
 app.use(bodyParser.urlencoded({  
