@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 
 var productRoutes = require('./api/routes/products');
 var orderRoutes = require('./api/routes/orders');
+var userRoutes = require('./api/routes/user');
 
 mongoose.connect('mongodb+srv://jazzmastaz:'+process.env.MONGO_ATLAS_PW +'@marvel-biyxx.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true
@@ -34,11 +35,9 @@ app.use(function(req, res, next){
     next();
 });
 
-//app.use(bodyParser.urlencoded({entended: false}));
-//app.use(bodyParser.json());
-
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/user', userRoutes);
 
 app.use(function(req, res, next){
     var error = new Error('Not Found');
