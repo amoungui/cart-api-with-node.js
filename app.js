@@ -11,8 +11,8 @@ var productRoutes = require('./api/routes/products');
 var orderRoutes = require('./api/routes/orders');
 
 mongoose.connect('mongodb+srv://jazzmastaz:'+process.env.MONGO_ATLAS_PW +'@marvel-biyxx.mongodb.net/test?retryWrites=true&w=majority', {
-    //useNewUrlParser: true
-    useMongoClient: true
+    useNewUrlParser: true
+    //useMongoClient: true
 });
 
 app.use(morgan('dev'));
