@@ -23,7 +23,8 @@ exports.get_all_product = function(req, res, next){
                             _id: doc._id,
                             request: {
                                 type: "GET",
-                                url: "http://localhost:8080/products/"+doc._id
+                                url: "http://localhost:8080/products/"+doc._id,
+                                addToCart: "http://localhost:8080/cart/"+doc._id
                             }
                         };
                     })
@@ -85,7 +86,8 @@ exports.get_product = function(req, res, next){
                         product: doc,
                         request: {
                             type: 'GET',
-                            url:"http://localhost:8080/products"
+                            url:"http://localhost:8080/products",
+                            addToCart:"http://localhost:8080/cart/"+doc._id
                         }
                     });// return response if the query is success                    
                 }else{
