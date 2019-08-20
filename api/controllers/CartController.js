@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Cart = require('../models/cart');
 var Product = require('../models/product');
 
+//function qui ajout un ou des produit dans le panier
 exports.get_in_cart = function(req, res, next){
     var productId = req.params.id;
     var cart = new Cart(req.session.cart? req.session.cart: {});
@@ -16,11 +17,13 @@ exports.get_in_cart = function(req, res, next){
         console.log(req.session.cart);
         res.status(200).json({
             message: "product added",
-            cart: req.session.cart
+            cart: req.session.cart,
+            url: "http://localhost:8080/checkout/"
         });
     });
 };
 
+// function qui permet lister les produit du panier
 exports.shopping_cart = function(req, res, next){
     var message = req.session.cart;
     if(!message){
@@ -33,6 +36,7 @@ exports.shopping_cart = function(req, res, next){
     res.status(200).json({
         message: "you have product(s) in your Cart",
         products: cart.generateArray(),
-        totalPrice: cart.totalPrice
+        totalPrice: cart.totalPrice,
+        url: "http://localhost:8080/checkout/"
     });    
 };

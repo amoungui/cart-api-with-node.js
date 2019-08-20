@@ -14,6 +14,7 @@ var productRoutes = require('./api/routes/products');
 var orderRoutes = require('./api/routes/orders');
 var userRoutes = require('./api/routes/user');
 var cartRoutes = require('./api/routes/cart');
+var checkoutRoutes = require('./api/routes/checkout');
 
 mongoose.connect('mongodb+srv://jazzmastaz:'+process.env.MONGO_ATLAS_PW +'@marvel-biyxx.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true
@@ -50,6 +51,7 @@ app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
 app.use('/cart', cartRoutes);
+app.use('/checkout', checkoutRoutes);
 
 app.use(function(req, res, next){
     var error = new Error('Not Found');
