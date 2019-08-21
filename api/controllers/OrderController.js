@@ -23,7 +23,8 @@ exports.get_all_order = function(req, res, next){
                             _id: doc._id,
                             request: {
                                 type: "GET",
-                                url: "http://localhost:8080/orders/"+doc._id
+                                url: "http://localhost:8080/orders/"+doc._id,
+                                addToCart: "http://localhost:8080/cart/"+doc._id
                             }
                         };
                     })
@@ -90,7 +91,8 @@ exports.get_order = function(req, res, next){
         order: order,
         request: {
           type: "GET",
-          url: "http://localhost:3000/orders"
+          url: "http://localhost:3000/orders",
+          addToCart: "http://localhost:8080/cart/"+order.product.id
         }
       });
     })
