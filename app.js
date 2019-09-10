@@ -9,6 +9,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+//
+require('dotenv').config({ path: 'variables.env' });
+
+//console.log(process.env.DB_URL);
 
 var productRoutes = require('./api/routes/products');
 var orderRoutes = require('./api/routes/orders');
@@ -16,59 +20,60 @@ var userRoutes = require('./api/routes/user');
 var cartRoutes = require('./api/routes/cart');
 var checkoutRoutes = require('./api/routes/checkout');
 
-mongoose.connect('mongodb+srv://jazzmastaz:'+process.env.MONGO_ATLAS_PW +'@marvel-biyxx.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true
-    //useMongoClient: true
+        //useMongoClient: true
 });
 
 mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());  
-app.use(bodyParser.urlencoded({  
-    extended: true  
-})); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(cookieParser());
 app.use(session({
     secret: 'mysupersecret',
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    cookie: { maxAge: 180*60*1000 }
+    cookie: { maxAge: 180 * 60 * 1000 }
 }));
-app.use(function(req, res, next){
-    res.header('Access-Control-Allow-Origin','*');
-    res.header('Access-Control-Allow-Headers','Origin, X-Requested-with, Content-Type, Accept, Authorization');
-    
-    if(req.method === 'OPTIONS'){
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-with, Content-Type, Accept, Authorization');
+
+    if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
         return res.status(200).json({});
     }
     next();
 });
 
+app.use('/', productRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
 app.use('/cart', cartRoutes);
 app.use('/checkout', checkoutRoutes);
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     var error = new Error('Not Found');
     error.status = 404;
     next(error);
 });
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     res.locals.session = req.session;
     next();
 });
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     res.status(error.status || 500);
     res.json({
         error: {
-            message: error.message 
+            message: error.message
         }
     });
 });
