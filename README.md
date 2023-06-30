@@ -27,4 +27,4 @@ mongoose.connect('mongodb+srv://name:'+process.env.MONGO_ATLAS_PW +'@marvel-biyx
 });
 ``
 
-Now your can use your API correctly
+Now you can use your API correctly
